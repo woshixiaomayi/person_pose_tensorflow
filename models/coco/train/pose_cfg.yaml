@@ -1,0 +1,64 @@
+
+# path to the dataset description file
+dataset: /media/htu/data_aixinyan/new_pose/dataset/mydata/train_dataset.mat  # matt,careful!!
+#dataset_type: coco
+# all locations within this distance threshold are considered
+# positive training samples for detector
+pos_dist_thresh: 17 
+
+# all images in the dataset will be rescaled by the following
+# scaling factor to be processed by the CNN. You can select the
+# optimal scale by cross-validation
+global_scale: 0.80
+
+# During training an image will be randomly scaled within the
+# range [scale_jitter_lo; scale_jitter_up] to augment training data,
+# We found +/- 15% scale jitter works quite well.
+scale_jitter_lo: 0.85
+scale_jitter_up: 1.15
+
+# Randomly flips an image horizontally to augment training data
+mirror: true
+
+# list of pairs of symmetric joint IDs, for example in this case
+# 0 and 5 are IDs for the symmetric parts, and 12 or 13 do not have
+# symmetric parts. This is used to do flip training data correctly. 
+# 这里区别最大
+all_joints: [[5,6],[3,4],[2],[1],[0]] # matt,careful!!
+num_joints : 7   # matt,careful!!
+snapshot_prefix : "./snapshot"  # matt,careful!!
+
+# Type of the CNN to use, currently resnet_101 and resnet_50
+# are supported
+net_type: resnet_101
+init_weights: ../../pretrained/resnet_v1_101.ckpt
+
+# Location refinement parameters (check https://arxiv.org/abs/1511.06645)
+location_refinement: true
+locref_huber_loss: true
+locref_loss_weight: 0.05
+locref_stdev: 7.2801
+
+# Enabling this adds additional loss layer in the middle of the ConvNet,
+# which helps accuracy.
+intermediate_supervision: true
+intermediate_supervision_layer: 12
+
+# all images larger with size
+# width * height > max_input_size*max_input_size are not used in training.
+# Prevents training from crashing with out of memory exception for very
+# large images.
+max_input_size: 2000
+
+# Learning rate schedule for the SGD optimiser. 
+multi_step:
+- [0.005, 10000]
+- [0.02, 430000]
+- [0.002, 730000]
+- [0.001, 1030000]
+
+# How often display loss
+display_iters: 20
+
+# How often to save training snapshot
+save_iters: 6000

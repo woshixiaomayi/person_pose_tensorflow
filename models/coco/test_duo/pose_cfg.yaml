@@ -1,0 +1,19 @@
+datatype: coco
+dataset: /media/htu/data_aixinyan/new_pose/dataset/mydata/dataset_test.mat
+#dataset_type: "mydata"
+global_scale: 1.0
+init_weights: /media/htu/data_aixinyan/new_pose/models/coco/train/snapshot-270000
+location_refinement: true
+locref_stdev: 7.2801
+net_type: resnet_101
+scoremap_dir: test
+
+# 参考 demo/pose_cfg.py
+all_joints: [[5,6],[3,4],[2],[1],[0]] # matt,careful!!
+num_joints : 7   # matt,careful!!
+#all_joints_names: ['foot', 'knee', 'hip', 'neck', 'head']
+
+
+pairwise_predict: true
+pairwise_model_dir: /media/htu/data_aixinyan/new_pose/models/coco/pairwise/
+pairwise_stats_fn: /media/htu/data_aixinyan/new_pose/models/coco/pairwise/pairwise_stats.mat
